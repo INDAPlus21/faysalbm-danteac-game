@@ -1,6 +1,5 @@
 `use strict`
 import Character from "./character.js";
-import Coordinate from "./coordinate.js";
 
 const speed = 5;
 const characterWidth = 20;
@@ -8,28 +7,31 @@ const characterHeight = 30;
 
 const character1 = new Character(
     document.getElementById("character1"),
-    100,
-    100,
+    0,
+    0,
     characterWidth,
     characterHeight,
     speed,
     "ArrowRight",
     "ArrowLeft",
     "ArrowDown",
-    "ArrowUp"
+    "ArrowUp",
+    "."
 );
 const character2 = new Character(
     document.getElementById("character2"),
-    200,
-    200,
+    0,
+    0,
     characterWidth,
     characterHeight,
     speed,
     "d",
     "a",
     "s",
-    "w"
+    "w",
+    "g"
 );
+const characters = [character1, character2];
 
 document.getElementById("character1").style.width = `${characterWidth}px`;
 document.getElementById("character1").style.height = `${characterHeight}px`;
@@ -59,6 +61,8 @@ function gameLoop() {
     })
 }
 
-gameLoop(character1, character2);
-character1.registerKeyActivity();
-character2.registerKeyActivity();
+gameLoop();
+character1.registerMovementActivity();
+character2.registerMovementActivity();
+character1.registerHitPress(characters);
+character2.registerHitPress(characters);

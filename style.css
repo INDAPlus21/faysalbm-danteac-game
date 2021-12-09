@@ -8,10 +8,11 @@
     outline: 2px solid goldenrod;
     border : 5px solid firebrick;
     margin: auto;
+    position: relative;
 }
 
 .character {
-    position: relative;
+    position: absolute;
 }
 
 #character1 {
