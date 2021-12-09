@@ -3,11 +3,15 @@ import Character from "./character.js";
 import Coordinate from "./coordinate.js";
 
 const speed = 5;
+const characterWidth = 20;
+const characterHeight = 30;
 
 const character1 = new Character(
     document.getElementById("character1"),
     100,
     100,
+    characterWidth,
+    characterHeight,
     speed,
     "ArrowRight",
     "ArrowLeft",
@@ -16,17 +20,16 @@ const character1 = new Character(
 );
 const character2 = new Character(
     document.getElementById("character2"),
-    100,
-    100,
+    200,
+    200,
+    characterWidth,
+    characterHeight,
     speed,
     "d",
     "a",
     "s",
     "w"
 );
-
-const characterWidth = 20;
-const characterHeight = 30;
 
 document.getElementById("character1").style.width = `${characterWidth}px`;
 document.getElementById("character1").style.height = `${characterHeight}px`;
