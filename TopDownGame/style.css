@@ -1,29 +1,25 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
 
-#game{
-    width: 600px;
-    height: 450px;
+#map {
+    /* width: 600px; */
+    /* height: 450px; */
     outline: 2px solid goldenrod;
     border : 5px solid firebrick;
-
     margin: auto;
 }
-#character1{
-    width: 20px;
-    height: 28px;
-    background-color: darkgreen;
-    border-radius: 50%;
+
+.character {
     position: relative;
-    top: 100px;
-    left: 100px;
+}
+
+#character1 {
+    background-color: darkgreen;
     z-index: top;
 }
-#character2{
-    width: 20px;
-    height: 28px;
+
+#character2 {
     background-color: steelblue;
-    border-radius: 50%;
-    position: relative;
-    top: 350px;
-    left: 300px;
     z-index: top;
 }
