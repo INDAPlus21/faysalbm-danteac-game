@@ -5,7 +5,6 @@ export default class Coordinate {
         this.y = y;
     }
     get x(){return this.x}
-    set x(value){this.x = value}
 
 
 }
