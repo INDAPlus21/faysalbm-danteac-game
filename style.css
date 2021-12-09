@@ -1,0 +1,26 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+#map {
+    /* width: 600px; */
+    /* height: 450px; */
+    outline: 2px solid goldenrod;
+    border : 5px solid firebrick;
+    margin: auto;
+    position: relative;
+}
+
+.character {
+    position: absolute;
+}
+
+#character1 {
+    background-color: darkgreen;
+    z-index: top;
+}
+
+#character2 {
+    background-color: steelblue;
+    z-index: top;
+}
