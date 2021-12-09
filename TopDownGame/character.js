@@ -1,5 +1,8 @@
 export default class Character {
     constructor(DOMElement, x, y, speed, rightKey, leftKey, downKey, upKey) {
+        this.hp = 4;
+        this.width = 20;
+        this.heigh = 30;
         this.DOMElement = DOMElement;
         this.x = x;
         this.y = y;
@@ -19,8 +22,8 @@ export default class Character {
         }
     }
 
-    getDOMElement() {
-        return this.DOMElement;
+    loseHp(damage){
+        this.hp -= damage;
     }
 
     computeMovement(mapRightEdge, mapBottomEdge) {
@@ -86,5 +89,9 @@ export default class Character {
     registerKeyActivity() {
         this.registerKeyPress();
         this.registerKeyRelease();
+    }
+
+    getDOMElement() {
+        return this.DOMElement;
     }
 }

@@ -1,7 +1,13 @@
 `use strict`
 import Character from "./character.js";
+import Coordinate from "./coordinate.js";
 
 const speed = 5;
+
+const coordinate = new Coordinate(50,20);
+console.log(coordinate.x);
+coordinate.x = 10;
+console.log(coordinate.x);
 
 const character1 = new Character(
     document.getElementById("character1"),
