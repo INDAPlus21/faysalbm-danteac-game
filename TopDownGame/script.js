@@ -1,31 +1,60 @@
-let character1 = document.getElementById("character1");
+`use strict`
+import Character from "./character.js";
 
-//speed in each direction for P1
-var rSpeedP1 = 3;
-var lSpeedP1 = 3;
-var uSpeedP1 = 3;
-var dSpeedP1 = 3;
+const speed = 5;
 
-var interval;
+const character1 = new Character(
+    document.getElementById("character1"),
+    100,
+    100,
+    speed,
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowDown",
+    "ArrowUp"
+);
+const character2 = new Character(
+    document.getElementById("character2"),
+    100,
+    100,
+    speed,
+    "d",
+    "a",
+    "s",
+    "w"
+);
 
-function moveLeft(){
-    let left = 
-    parseInt(window .getComputedStyle(character1).getPropertyValue("left"));
-    character1.style.left = left - lSpeedP1 + "px";
+const characterWidth = 20;
+const characterHeight = 30;
+
+document.getElementById("character1").style.width = `${characterWidth}px`;
+document.getElementById("character1").style.height = `${characterHeight}px`;
+document.getElementById("character2").style.width = `${characterWidth}px`;
+document.getElementById("character2").style.height = `${characterHeight}px`;
+
+
+const map = document.getElementById("map");
+
+const mapWidth = 600;
+const mapHeight = 450;
+map.style.width = `${mapWidth}px`;
+map.style.height = `${mapHeight}px`;
+const mapRightEdge = mapWidth - characterWidth;
+const mapBottomEdge = mapHeight - characterHeight;
+
+console.log(map.style.height);
+
+
+function gameLoop() {
+    character1.computeMovement(mapRightEdge, mapBottomEdge);
+    character2.computeMovement(mapRightEdge, mapBottomEdge);
+    character1.moveCharacter();
+    character2.moveCharacter();
+    window.requestAnimationFrame(() => {
+        gameLoop();
+    })
 }
 
-document.addEventListener('keydown', function(e){
-
-    switch(e.keyCode){
-        case 37: //vänster pil knapp
-            interval = setInterval(moveLeft, 1);
-    }
-});
-
-document.addEventListener('keyup', function(e){
-
-    switch(e.keyCode){
-        case 37: //vänster pil knapp
-            interval = clearInterval()
-    }
-});
+gameLoop(character1, character2);
+character1.registerKeyActivity();
+character2.registerKeyActivity();
