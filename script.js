@@ -1,7 +1,7 @@
 `use strict`
 import Character from "./character.js";
 
-const speed = 5;
+const speed = 3;
 const characterWidth = 20;
 const characterHeight = 30;
 
@@ -50,6 +50,12 @@ const mapBottomEdge = mapHeight - characterHeight;
 
 console.log(map.style.height);
 
+startMenu();
+gameLoop();
+character1.registerMovementActivity();
+character2.registerMovementActivity();
+character1.registerHitPress(characters);
+character2.registerHitPress(characters);
 
 function gameLoop() {
     character1.computeMovement(mapRightEdge, mapBottomEdge);
@@ -58,11 +64,46 @@ function gameLoop() {
     character2.moveCharacter();
     window.requestAnimationFrame(() => {
         gameLoop();
-    })
+    })   
 }
 
-gameLoop();
-character1.registerMovementActivity();
-character2.registerMovementActivity();
-character1.registerHitPress(characters);
-character2.registerHitPress(characters);
+function startMenu(){
+    document.getElementById ("playerVsPlayer").addEventListener ("click", pvpButtonhandler, false);
+    document.getElementById ("playerVsAI").addEventListener ("click", pvaButtonhandler, false);
+    document.getElementById ("AIVsAI").addEventListener ("click", avaButtonhandler, false);
+    setCommandKeys();
+
+    
+}
+
+function setCommandKeys(e){
+    document.onkeydown = function(evt) {
+        if (evt.key == "Escape") {
+            on();
+        }
+    }
+
+}
+
+function pvpButtonhandler(){
+    off();
+}
+
+function pvaButtonhandler(){
+    off();
+}
+function avaButtonhandler(){
+    off();
+}
+
+function on() {
+    document.getElementById("mainMenu").style.display = "block";
+    //Paused=true;
+}
+
+function off() {
+    document.getElementById("mainMenu").style.display = "none";
+    //Paused=false;
+}
+
+

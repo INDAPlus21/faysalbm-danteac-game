@@ -1,14 +1,37 @@
 *, *::after, *::before {
     box-sizing: border-box;
 }
+#UI {
+    margin:auto;
+}
+
+#mainMenu
+{
+  position: fixed;
+  float: center;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.8;
+  z-index: 10;
+}
+
+/*Menu Buttons*/
+
+#playerVsPlayer {
+    float:center
+}
 
 #map {
     /* width: 600px; */
     /* height: 450px; */
     outline: 2px solid goldenrod;
     border : 5px solid firebrick;
-    margin: auto;
-    position: relative;
+    margin-left: 200px;
+    position: absolute;
 }
 
 .character {
@@ -18,9 +41,12 @@
 #character1 {
     background-color: darkgreen;
     z-index: top;
+    float: left;
 }
 
 #character2 {
     background-color: steelblue;
     z-index: top;
+    float: right;
+
 }
