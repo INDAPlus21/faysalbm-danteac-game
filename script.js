@@ -125,17 +125,7 @@ function avaiButtonhandler(){
 }
 
 function radioButtonMarkedC1(){
-    if(document.getElementById("character1 ai1").checked == true){
 
-        document.getElementById("character1 ai2").checked = true;
-        document.getElementById("character1 ai1").value = 0;
-        document.getElementById("character1 ai2").value = 1;
-    }
-    else{
-        document.getElementById("character1 ai1").checked = true;
-        document.getElementById("character1 ai1").value = 1;
-        document.getElementById("character1 ai2").value = 0;
-    }
 }
 
 function radioButtonMarkedC2(){
