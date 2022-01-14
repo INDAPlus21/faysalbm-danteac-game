@@ -23,7 +23,7 @@ export default class Character {
         this.hitKey = hitKey;
         this.facing = this.directions.up;
         this.playerNumber = `${this.DOMElement.getAttribute("id")}`.substr(9); //hämtar 1 från "character1"(Mycket fult men det funkar)
-        
+
     }
 
 
@@ -36,9 +36,9 @@ export default class Character {
         else{
             this.hp -= damage;
         } 
-        document.getElementById("HP" + this.playerNumber).innerHTML = "Player" + this.playerNumber + ": " + this.hp;
-        const id = this.DOMElement.getAttribute("id")
+        const id = this.DOMElement.getAttribute("id");
         console.log(`${id}: ${this.hp}`);
+        document.getElementById("HP" + this.playerNumber).innerHTML = "Player" + this.playerNumber + ": " + this.hp;
     }
 
     computeMovement(mapRightEdge, mapBottomEdge) {
@@ -75,6 +75,7 @@ export default class Character {
         if (this.y > mapBottomEdge) {
             this.y = mapBottomEdge;
         }
+        
     }
 
     moveCharacter() {

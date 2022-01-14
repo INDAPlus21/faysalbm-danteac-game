@@ -3,10 +3,13 @@
 }
 #UI {
     margin:auto;
+    text-align: center;
 }
 
 #mainMenu
 {
+  padding: 20%;
+  text-align: center;
   position: fixed;
   float: center;
   display: block;
@@ -19,34 +22,103 @@
   z-index: 10;
 }
 
+#chooseAi
+{
+  width: 5%;
+  height: 35%;
+  position: fixed;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  float: center;
+  display: none;
+  padding: 7%;
+}
+
+#character1AiSelection
+{
+    width: 5%;
+    height: 30%;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 25%;
+    transform: translateY(-50%);
+    float: center;
+    display: block;
+    padding: 5%;
+}
+
+#character2AiSelection
+{
+    width: 5%;
+    height: 30%;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 75%;
+    transform: translateY(-50%);
+    float: center;
+    display: block;
+    padding: 5%;
+}
+
+
 /*Menu Buttons*/
 
 #playerVsPlayer {
     float:center
 }
 
+#startButton
+{
+    display: none;
+}
+
 #map {
-    /* width: 600px; */
-    /* height: 450px; */
+    /*width: 600px;*/
+    /*height: 450px;*/
     outline: 2px solid goldenrod;
     border : 5px solid firebrick;
-    margin-left: 200px;
+    margin-left: 25%;
     position: absolute;
 }
 
 .character {
     position: absolute;
-}
-
-#character1 {
-    background-color: darkgreen;
     z-index: top;
     float: left;
 }
 
-#character2 {
-    background-color: steelblue;
-    z-index: top;
-    float: right;
-
+#character1 
+{
+    background-color: darkgreen;
 }
+
+#character2 
+{
+    background-color: steelblue;
+}
+
+#characterIm1
+{
+    position: relative;
+    width: 20px;
+    height: 30px;
+    background-color: darkgreen;
+}
+
+#characterIm2 
+{
+    position: relative;
+    width: 20px;
+    height: 30px;
+    background-color: steelblue;
+}
+
+
+
+
