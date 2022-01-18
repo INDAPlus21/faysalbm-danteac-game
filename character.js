@@ -1,9 +1,9 @@
 export default class Character {
     constructor(DOMElement, x, y, width, height, speed, rightKey, leftKey, downKey, upKey, hitKey) {
+        this.DOMElement = DOMElement;
         this.hp = 4;
         this.width = width;
         this.height = height;
-        this.DOMElement = DOMElement;
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -23,19 +23,16 @@ export default class Character {
         this.hitKey = hitKey;
         this.facing = this.directions.up;
         this.playerNumber = `${this.DOMElement.getAttribute("id")}`.substr(9); //hämtar 1 från "character1"(Mycket fult men det funkar)
-
     }
 
-
-
-    loseHp(damage){
+    loseHp(damage) {
         console.log(this.playerNumber);
-        if(damage >= this.hp){
+        if (damage >= this.hp) {
             this.hp = 0;
         }
-        else{
+        else {
             this.hp -= damage;
-        } 
+        }
         const id = this.DOMElement.getAttribute("id");
         console.log(`${id}: ${this.hp}`);
         document.getElementById("HP" + this.playerNumber).innerHTML = "Player" + this.playerNumber + ": " + this.hp;
@@ -75,7 +72,7 @@ export default class Character {
         if (this.y > mapBottomEdge) {
             this.y = mapBottomEdge;
         }
-        
+
     }
 
     moveCharacter() {
@@ -95,64 +92,64 @@ export default class Character {
         });
     }
 
-    registerHitPress(characters){
+    registerHitPress(characters) {
         this.registerKeyPress((e) => {
-           
-            if(e.key === this.hitKey){
+
+            if (e.key === this.hitKey) {
                 const forwardRange = 60;
                 const sideRange = 40;
                 let xMin;
                 let xMax;
                 let yMin;
                 let yMax;
-                
-                if(this.facing === this.directions.up){
+
+                if (this.facing === this.directions.up) {
                     yMax = this.y;
                     yMin = this.y - forwardRange;
                     xMax = this.x + sideRange;
-                    xMin = this.x - sideRange; 
+                    xMin = this.x - sideRange;
                 }
-                else if(this.facing === this.directions.right){
+                else if (this.facing === this.directions.right) {
                     yMax = this.y + sideRange;
                     yMin = this.y - sideRange;
                     xMax = this.x + forwardRange;
-                    xMin = this.x; 
+                    xMin = this.x;
                 }
-                else if(this.facing === this.directions.down){
+                else if (this.facing === this.directions.down) {
                     yMax = this.y + forwardRange;
                     yMin = this.y;
                     xMax = this.x + sideRange;
-                    xMin = this.x - sideRange; 
+                    xMin = this.x - sideRange;
                 }
-                else if(this.facing === this.directions.left){
+                else if (this.facing === this.directions.left) {
                     yMax = this.y + sideRange;
                     yMin = this.y - sideRange;
                     xMax = this.x;
-                    xMin = this.x - forwardRange; 
+                    xMin = this.x - forwardRange;
                 }
 
                 characters.forEach(character => {
-                    if(character != this 
+                    if (character != this
                         && Character.inRange(character.x, xMin, xMax)
-                        && Character.inRange(character.y, yMin, yMax)){
-                            character.loseHp(1);
-                        }
+                        && Character.inRange(character.y, yMin, yMax)) {
+                        character.loseHp(1);
+                    }
                 });
 
 
 
-                
+
                 console.log(this.facing);
 
             }
         })
     }
 
-    static inRange(value, min, max){
+    static inRange(value, min, max) {
         return (value > min && value < max);
     }
 
-    registerMovementPress(){
+    registerMovementPress() {
         this.registerKeyPress((e) => {
             const direction = this.directionKeys[e.key];
             if (this.heldDirections.indexOf(direction) === -1) {
@@ -161,7 +158,7 @@ export default class Character {
         })
     }
 
-    registerMovementRelease(){
+    registerMovementRelease() {
         this.registerKeyRelease((e) => {
             const direction = this.directionKeys[e.key];
             const index = this.heldDirections.indexOf(direction);
@@ -171,17 +168,16 @@ export default class Character {
         })
     }
 
-
     registerMovementActivity() {
         this.registerMovementPress();
         this.registerMovementRelease();
     }
 
-    applyAi1(){
-        
+    applyAi1() {
+
     }
 
-    applyAi2(){
+    applyAi2() {
 
     }
 
