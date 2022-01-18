@@ -1,23 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Start page</title>
         <link rel="stylesheet" href=style.css>
-        <script type="module" src="script.js"></script>
+        <!--<script type="module" src="script.js"></script>-->
     </head>
 
     <!--vet inte om vi kanske kommer behöva två divs för två karaktärer. Aa det stämmer.-->
-
     <body>
-        <div id="map">
-            <div class="character" id="character1"></div>
-            <div class="character" id="character2"></div>
+        <div id="mainMenu"  style="width:100%">
+            
+            <div id="menubuttons">
+                <button id="playerVsPlayer"> Player VS Player </button>
+                <button id="playerVsAI"> Player VS AI </button>
+                <button id="AIVsAI"> AI VS AI </button>
+            </div>
+
+            <!-- Den här delen är inte färdig implementerad och jag kan inte få radio knapparna att fungera helt -->
+            <!-- Syftet är att du ska kunna välja vilken AI du vill sätta på vilken karaktär -->
+            <div id="chooseAi">
+                <div id = character1AiSelection>
+                    <div class="character" id = "characterIm1"></div>
+
+                    <label name = "AI 1" value = "AI 1" position = "relative">AI 1</label>
+                    <input class= "AI character1"
+                        type="radio"
+                        name = "AI character1"
+                        id = "character1 ai1">
+                        
+                    <label name = "AI 2" value = "AI 1" position = "relative">AI 2</label>
+                    <input class= "AI character1"
+                        type="radio"
+                        name = "AI character1"
+                        id = "character1 ai2">
+                    
+                </div>
+                <div id = character2AiSelection>
+                    <div class="character" id = "characterIm2"></div>
+                    
+                    <label name = "AI character1" value = "AI 1" position = "relative">AI 1</label>
+                    <input class= "AI character2" 
+                        name = "AI character2"
+                        id = "character2 ai1"
+                        type="radio"
+                        value="AI 1">
+
+                    <label name = "AI character1" value = "AI 1 " position = "relative">AI 2</label>
+                    <input class= "AI character2" 
+                        name = "AI character2"
+                        id = "character2 ai2"
+                        type="radio"
+                        value="AI 2">
+
+                </div>
+
+
+            </div>
+
+            <button id = "startButton"> START! </button>button>
+
+        </div>
+        <div id="UI">
+            <div id="HP1" style="float:right"></div>
+
+            <div id="map"> 
+                <div class="character" id="character1"></div>
+                <div class="character" id="character2"></div>
+            </div>
+            
+            <div id="HP2" style="float:left"></div>
+
         </div>
 
+        <script type="module" src="character.js"></script>
+        <script type="module" src="script.js"></script>
     </body>
 
 </html>
