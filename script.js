@@ -5,6 +5,8 @@ const speed = 3;
 const characterWidth = 20;
 const characterHeight = 30;
 
+var paused = true;
+
 const character1 = new Character(
     document.getElementById("character1"),
     0,
@@ -50,12 +52,21 @@ const mapBottomEdge = mapHeight - characterHeight;
 
 console.log(map.style.height);
 
+
+
+
 startMenu();
-gameLoop();
-character1.registerMovementActivity();
-character2.registerMovementActivity();
-character1.registerHitPress(characters);
-character2.registerHitPress(characters);
+
+function start(){
+    document.getElementById("HP" + character1.playerNumber).innerHTML = "Player" + character1.playerNumber + ": " + character1.hp;
+    document.getElementById("HP" + character2.playerNumber).innerHTML = "Player" + character2.playerNumber + ": " + character2.hp;
+    on();
+    gameLoop();
+    character1.registerMovementActivity();
+    character2.registerMovementActivity();
+    character1.registerHitPress(characters);
+    character2.registerHitPress(characters);
+}
 
 function gameLoop() {
     character1.computeMovement(mapRightEdge, mapBottomEdge);
@@ -67,43 +78,72 @@ function gameLoop() {
     })   
 }
 
+
+
 function startMenu(){
     document.getElementById ("playerVsPlayer").addEventListener ("click", pvpButtonhandler, false);
-    document.getElementById ("playerVsAI").addEventListener ("click", pvaButtonhandler, false);
-    document.getElementById ("AIVsAI").addEventListener ("click", avaButtonhandler, false);
+    document.getElementById ("playerVsAI").addEventListener ("click", pvaiButtonhandler, false);
+    document.getElementById ("AIVsAI").addEventListener ("click", avaiButtonhandler, false);
+    document.getElementById ("startButton").addEventListener ("click",start, false);
+    document.getElementById ("character1 ai1").addEventListener ("change",radioButtonMarkedC1, false);
+    document.getElementById ("character1 ai2").addEventListener ("change",radioButtonMarkedC1, false);
+    document.getElementById ("character2 ai1").addEventListener ("change",radioButtonMarkedC2, false);
+    document.getElementById ("character2 ai2").addEventListener ("change",radioButtonMarkedC2, false);
     setCommandKeys();
 
-    
 }
 
-function setCommandKeys(e){
+function setCommandKeys(){
     document.onkeydown = function(evt) {
         if (evt.key == "Escape") {
-            on();
+            if (paused){
+                on();
+            }
+            else{
+                off();
+            }
         }
     }
 
 }
 
 function pvpButtonhandler(){
-    off();
+    document.getElementById("menubuttons").style.display = "none";
+    document.getElementById("startButton").style.display = "block";
 }
 
-function pvaButtonhandler(){
-    off();
+function pvaiButtonhandler(){
+    document.getElementById("menubuttons").style.display = "none";
+    document.getElementById("chooseAi").style.display = "block";
+    document.getElementById("startButton").style.display = "block";
 }
-function avaButtonhandler(){
-    off();
+
+function avaiButtonhandler(){
+    document.getElementById("menubuttons").style.display = "none";
+    document.getElementById("chooseAi").style.display = "block";
+    document.getElementById("startButton").style.display = "block";
+}
+
+function radioButtonMarkedC1(){
+
+}
+
+function radioButtonMarkedC2(){
+
 }
 
 function on() {
-    document.getElementById("mainMenu").style.display = "block";
-    //Paused=true;
+    document.getElementById("mainMenu").style.display = "none";
+    document.getElementById("startButton").style.display = "none";
+    document.getElementById("menubuttons").style.display = "block";
+    paused=false;
 }
 
 function off() {
-    document.getElementById("mainMenu").style.display = "none";
-    //Paused=false;
+    document.getElementById("mainMenu").style.display = "block";
+    document.getElementById("chooseAi").style.display = "none";
+    paused=true;
 }
+
 
 

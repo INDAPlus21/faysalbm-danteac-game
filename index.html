@@ -13,19 +13,59 @@
     </head>
 
     <!--vet inte om vi kanske kommer behöva två divs för två karaktärer. Aa det stämmer.-->
-    <!--onclick="off()"-->
     <body>
         <div id="mainMenu"  style="width:100%">
+            
+            <div id="menubuttons">
+                <button id="playerVsPlayer"> Player VS Player </button>
+                <button id="playerVsAI"> Player VS AI </button>
+                <button id="AIVsAI"> AI VS AI </button>
+            </div>
 
-            <button id="playerVsPlayer"> Player VS Player </button>
-            <button id="playerVsAI"> Player VS AI </button>
-            <button id="AIVsAI"> AI VS AI </button>
+            <!-- Den här delen är inte färdig implementerad och jag kan inte få radio knapparna att fungera helt -->
+            <!-- Syftet är att du ska kunna välja vilken AI du vill sätta på vilken karaktär -->
+            <div id="chooseAi">
+                <div id = character1AiSelection>
+                    <div class="character" id = "characterIm1"></div>
+
+                    <label name = "AI 1" value = "AI 1" position = "relative">AI 1</label>
+                    <input type="radio"
+                        name = "AI 1"
+                        id = "character1 ai1">
+                        
+                    <label name = "AI 2" value = "AI 1" position = "relative">AI 2</label>
+                    <input type="radio"
+                        name = "AI 2"
+                        id = "character1 ai2">
+                    
+                </div>
+                <div id = character2AiSelection>
+                    <div class="character" id = "characterIm2"></div>
+                    
+                    <label name = "AI 1" value = "AI 1" position = "relative">AI 1</label>
+                    <input class="favorite styled" 
+                        id = "character2 ai1"
+                        type="radio"
+                        value="AI 1">
+
+                    <label name = "AI 2" value = "AI 1 " position = "relative">AI 2</label>
+                    <input class="favorite styled" 
+                        id = "character2 ai2"
+                        type="radio"
+                        value="AI 2">
+
+                </div>
+
+
+            </div>
+
+            <button id = "startButton"> START! </button>button>
 
         </div>
         <div id="UI">
             <div id="HP1" style="float:right"></div>
 
-            <div id="map">
+            <div id="map"> 
                 <div class="character" id="character1"></div>
                 <div class="character" id="character2"></div>
             </div>
