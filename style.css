@@ -87,11 +87,22 @@
     position: absolute;
 }
 
+.ai {
+    position: absolute;
+    z-index: top;
+    float: left;
+}
+
+#ai1 {
+    background-color: blueviolet;
+}
+
 .character {
     position: absolute;
     z-index: top;
     float: left;
 }
+
 
 #character1 
 {
