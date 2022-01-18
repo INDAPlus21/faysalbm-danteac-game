@@ -177,6 +177,14 @@ export default class Character {
         this.registerMovementRelease();
     }
 
+    applyAi1(){
+        
+    }
+
+    applyAi2(){
+
+    }
+
     getDOMElement() {
         return this.DOMElement;
     }

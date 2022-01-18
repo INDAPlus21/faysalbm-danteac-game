@@ -85,10 +85,6 @@ function startMenu(){
     document.getElementById ("playerVsAI").addEventListener ("click", pvaiButtonhandler, false);
     document.getElementById ("AIVsAI").addEventListener ("click", avaiButtonhandler, false);
     document.getElementById ("startButton").addEventListener ("click",start, false);
-    document.getElementById ("character1 ai1").addEventListener ("change",radioButtonMarkedC1, false);
-    document.getElementById ("character1 ai2").addEventListener ("change",radioButtonMarkedC1, false);
-    document.getElementById ("character2 ai1").addEventListener ("change",radioButtonMarkedC2, false);
-    document.getElementById ("character2 ai2").addEventListener ("change",radioButtonMarkedC2, false);
     setCommandKeys();
 
 }
@@ -116,20 +112,43 @@ function pvaiButtonhandler(){
     document.getElementById("menubuttons").style.display = "none";
     document.getElementById("chooseAi").style.display = "block";
     document.getElementById("startButton").style.display = "block";
+
+    // troligen borde det göras om så att AIn håller koll på karaktären och inte tvärt om som det är nu (t.ex AI1.control(character1);)
+    // men sätter det såhär temprärt eftersom vi inte har en AI klass ännu
+    if(document.getElementById("character1 ai1").checked){
+        character1.applyAi1();
+    }
+    else if(document.getElementById("character1 ai2").checked){
+        character1.applyAi2();
+    }
+
+    else if(document.getElementById("character2 ai1").checked){
+        character2.applyAi1();
+    }
+    else if (document.getElementById("character2 ai2").checked){
+        character2.applyAi2();
+    }
+
 }
 
 function avaiButtonhandler(){
     document.getElementById("menubuttons").style.display = "none";
     document.getElementById("chooseAi").style.display = "block";
     document.getElementById("startButton").style.display = "block";
-}
 
-function radioButtonMarkedC1(){
+    if(document.getElementById("character1 ai1").checked()){
+        character1.applyAi1();
+    }
+    else{
+        character1.applyAi2();
+    }
 
-}
-
-function radioButtonMarkedC2(){
-
+    if(document.getElementById("character2 ai1").checked()){
+        character2.applyAi1();
+    }
+    else{
+        character2.applyAi2();
+    }
 }
 
 function on() {
