@@ -13,6 +13,10 @@ export default class Player extends Character {
         this.hitKey = hitKey;
     }
 
+    computeActions(mapRightEdge, mapBottomEdge){
+        this.computeMovement(mapRightEdge, mapBottomEdge);
+    }
+
     computeMovement(mapRightEdge, mapBottomEdge) {
         const rightIndex = this.heldDirections.indexOf(this.directions.right);
         const leftIndex = this.heldDirections.indexOf(this.directions.left);
