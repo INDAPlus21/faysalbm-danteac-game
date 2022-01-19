@@ -1,4 +1,7 @@
 import Player from "./Player.js";
+import SimpleAi from "./SimpleAi.js";
+import SimpleAi2 from "./SimpleAi2.js";
+
 `use strict`
 
 const speed = 3;
@@ -100,6 +103,8 @@ function beginGame() {
             hideMainMenu();
             chars.unshift(char1);
             chars.unshift(char2);
+            console.log(char1);
+            console.log(char2);
             gameLoop();
         }
     } else {
@@ -109,10 +114,6 @@ function beginGame() {
         chars.unshift(char1);
         chars.unshift(char2);
         hideMainMenu();
-        char1.registerMovementActivity();
-        char2.registerMovementActivity();
-        char1.registerHit(chars);
-        char2.registerHit(chars);
         gameLoop();
     }
 }
@@ -120,8 +121,8 @@ function beginGame() {
 
 
 function gameLoop() {
-    char1.computeMovement(mapRightEdge, mapBottomEdge);
-    char2.computeMovement(mapRightEdge, mapBottomEdge);
+    char1.computeActions(mapRightEdge, mapBottomEdge);
+    char2.computeActions(mapRightEdge, mapBottomEdge);
     char1.updatePosition();
     char2.updatePosition();
     window.requestAnimationFrame(() => {
@@ -187,41 +188,183 @@ function changeRadioBtnsGrouping() {
 //#region Initiate characters functions,
 function initiatePlayerVsAiCharacters() {
     if (document.getElementById("radio-btn-char1-ai1").checked) {
-        // char1 = new Ai1();
-        // char2 = new Player();
+
+        char1 = new SimpleAi(
+            document.getElementById("character1"),
+            4,
+            600,
+            450,
+            characterWidth,
+            characterHeight,
+            speed,
+            1
+        );
+
+        char2 = new Player(
+            document.getElementById("character2"),
+            4,
+            0,
+            0,
+            characterWidth,
+            characterHeight,
+            speed,
+            2,
+            "d",
+            "a",
+            "s",
+            "w",
+            "g"
+        );
+        activePlayer2()
     }
     else if (document.getElementById("radio-btn-char1-ai2").checked) {
-        // char1 = new Ai2();
-        // char2 = new Player();
+        char1 = new SimpleAi2(
+            document.getElementById("character1"),
+            4,
+            600,
+            450,
+            characterWidth,
+            characterHeight,
+            speed,
+            1
+        );
+
+        char2 = new Player(
+            document.getElementById("character2"),
+            4,
+            0,
+            0,
+            characterWidth,
+            characterHeight,
+            speed,
+            2,
+            "d",
+            "a",
+            "s",
+            "w",
+            "g"
+        );
+        activePlayer2()
     }
 
     else if (document.getElementById("radio-btn-char2-ai1").checked) {
-        // char1 = new Player();
-        // char2 = new Ai1();
+
+        char1 = new Player(
+            document.getElementById("character1"),
+            4,
+            600,
+            450,
+            characterWidth,
+            characterHeight,
+            speed,
+            1,
+            "ArrowRight",
+            "ArrowLeft",
+            "ArrowDown",
+            "ArrowUp",
+            "."
+        );
+        activePlayer1()
+
+        char2 = new SimpleAi(
+            document.getElementById("character2"),
+            4,
+            0,
+            0,
+            characterWidth,
+            characterHeight,
+            speed,
+            2
+        );
     }
-    else if (document.getElementById("radio-btn-char2-ai1").checked) {
-        // char1 = new Player();
-        // char2 = new Ai2();
+    else if (document.getElementById("radio-btn-char2-ai2").checked) {
+        char1 = new Player(
+            document.getElementById("character1"),
+            4,
+            600,
+            450,
+            characterWidth,
+            characterHeight,
+            speed,
+            1,
+            "ArrowRight",
+            "ArrowLeft",
+            "ArrowDown",
+            "ArrowUp",
+            "."
+        );
+        activePlayer1()
+
+        char2 = new SimpleAi2(
+            document.getElementById("character2"),
+            4,
+            0,
+            0,
+            characterWidth,
+            characterHeight,
+            speed,
+            2
+        );
+
     }
 }
 
 function initiateAiVsAiCharacters() {
     if (document.getElementById("radio-btn-char1-ai1").checked) {
-        // char1 = new Ai1();
-        // char2 = new Ai2();
+
+        char1 = new SimpleAi(
+            document.getElementById("character1"),
+            4,
+            600,
+            450,
+            characterWidth,
+            characterHeight,
+            speed,
+            1,
+            chars
+        );
+
     }
     else if (document.getElementById("radio-btn-char1-ai2").checked) {
-        // char1 = new Ai2();
-        // char2 = new Ai1();
+
+        char1 = new SimpleAi2(
+            document.getElementById("character1"),
+            4,
+            600,
+            450,
+            characterWidth,
+            characterHeight,
+            speed,
+            1
+        );
     }
 
     if (document.getElementById("radio-btn-char2-ai1").checked) {
-        // char1 = new Ai2();
-        // char2 = new Ai1();
+
+        char2 = new SimpleAi(
+            document.getElementById("character2"),
+            4,
+            0,
+            0,
+            characterWidth,
+            characterHeight,
+            speed,
+            2
+        );
     }
     else if (document.getElementById("radio-btn-char2-ai2").checked) {
-        // char1 = new Ai1();
-        // char2 = new Ai2();
+
+        char2 = new SimpleAi2(
+            document.getElementById("character2"),
+            4,
+            0,
+            0,
+            characterWidth,
+            characterHeight,
+            speed,
+            2,
+            chars
+        );
     }
 }
 
@@ -229,8 +372,8 @@ function initiatePvpCharacters() {
     char1 = new Player(
         document.getElementById("character1"),
         4,
-        0,
-        0,
+        600,
+        450,
         characterWidth,
         characterHeight,
         speed,
@@ -256,7 +399,21 @@ function initiatePvpCharacters() {
         "w",
         "g"
     );
+    activePlayer1()
+    activePlayer2()
 }
+
+function activePlayer1(){
+    char1.registerMovementActivity();
+    char1.registerHit(chars);
+}
+
+function activePlayer2(){
+    char2.registerMovementActivity();
+    char2.registerHit(chars);
+}
+
+
 //#endregion
 
 // function createPlayer(playerReference) {

@@ -1,10 +1,10 @@
 import Character from "./Character.js";
 
-export default class SimpleAi extends Character {
+export default class SimpleAi2 extends Character {
     constructor(DOMElement, hp, x, y, width, height, speed, characterNumber, chars) {
         super(DOMElement, hp, x, y, width, height, speed, characterNumber);
-        this.targetPoint = { x: 300, y: 300 };
-        this.chars = chars;
+        this.targetPoint = { x: 450, y: 300 };
+        this.chars = chars
     }
 
     computeActions() {
@@ -22,8 +22,12 @@ export default class SimpleAi extends Character {
         }
     }
 
-    loadData(characters){
-        this.character = characters;
+    registerMovementActivity(){
+
+    }
+
+    registerHit(characters){
+
     }
 
 
