@@ -13,7 +13,7 @@ export default class Player extends Character {
         this.hitKey = hitKey;
     }
 
-    computeActions(mapRightEdge, mapBottomEdge){
+    computeActions(mapRightEdge, mapBottomEdge) {
         this.computeMovement(mapRightEdge, mapBottomEdge);
     }
 
@@ -94,5 +94,10 @@ export default class Player extends Character {
                 this.hit(characters);
             }
         })
+    }
+
+    activate(characters) {
+        this.registerMovementActivity();
+        this.registerHit(characters);
     }
 }

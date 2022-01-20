@@ -100,6 +100,8 @@ function beginGame() {
             }
             characters.unshift(character1);
             characters.unshift(character2);
+            character1.activate(characters);
+            character2.activate(characters);
             hideMainMenu();
             document.getElementById("hp" + character1.characterNumber).innerHTML = "Player" + character1.characterNumber + ": " + character1.hp;
             document.getElementById("hp" + character2.characterNumber).innerHTML = "Player" + character2.characterNumber + ": " + character2.hp;
@@ -109,6 +111,8 @@ function beginGame() {
         initiatePvpCharacters();
         characters.unshift(character1);
         characters.unshift(character2);
+        character1.activate(characters);
+        character2.activate(characters);
         hideMainMenu();
         document.getElementById("hp" + character1.characterNumber).innerHTML = "Player" + character1.characterNumber + ": " + character1.hp;
         document.getElementById("hp" + character2.characterNumber).innerHTML = "Player" + character2.characterNumber + ": " + character2.hp;
@@ -215,7 +219,6 @@ function initiatePlayerVsAiCharacters() {
             "w",
             "g"
         );
-        activePlayer2();
         //#endregion
     }
     else if (document.getElementById("radio-btn-character1-ai2").checked) {
@@ -249,7 +252,6 @@ function initiatePlayerVsAiCharacters() {
             "w",
             "g"
         );
-        activePlayer2();
         //#endregion
     }
 
@@ -270,7 +272,6 @@ function initiatePlayerVsAiCharacters() {
             "ArrowUp",
             "."
         );
-        activePlayer1();
         //#endregion
 
         //#region character2 - DanteAi constructor
@@ -304,7 +305,6 @@ function initiatePlayerVsAiCharacters() {
             "ArrowUp",
             "."
         );
-        activePlayer1();
         //#endregion
 
         //#region character2 - FaysalAi constructor
@@ -423,19 +423,6 @@ function initiatePvpCharacters() {
         "g"
     );
     //#endregion
-
-    activePlayer1()
-    activePlayer2()
-}
-
-function activePlayer1() {
-    character1.registerMovementActivity();
-    character1.registerHit(characters);
-}
-
-function activePlayer2() {
-    character2.registerMovementActivity();
-    character2.registerHit(characters);
 }
 //#endregion
 
