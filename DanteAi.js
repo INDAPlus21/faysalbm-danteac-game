@@ -3,13 +3,28 @@ import Character from "./Character.js";
 export default class DanteAi extends Character {
     constructor(DOMElement, hp, x, y, width, height, speed, characterNumber, characters) {
         super(DOMElement, hp, x, y, width, height, speed, characterNumber);
-        this.targetPoint = { x: 300, y: 300 };
-        this.characters = characters;
+        this.opponent;
     }
 
     computeActions() {
         this.computeMovement();
     }
+
+    computeMovement() {
+
+    }
+
+    activate(characters) {
+        characters.forEach(character => {
+            console.log(character);
+            if (character != this) {
+                this.opponent = character;
+            }
+        });
+    }
+}
+
+/* old functions
 
     computeMovement() {
         if (this.x != this.targetPoint.x || this.y != this.targetPoint.y) {
@@ -25,4 +40,16 @@ export default class DanteAi extends Character {
             }
         }
     }
-}
+
+    fetchOpponentObj(characters) {
+        characters.forEach(character => {
+            console.log(character);
+            if (character != this) {
+                console.log(character);
+                return character;
+            }
+            return -1;
+        });
+    }
+
+*/
