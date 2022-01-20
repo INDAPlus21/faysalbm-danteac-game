@@ -1,13 +1,17 @@
 import Character from "./Character.js";
 
-export default class SimpleAi2 extends Character {
-    constructor(DOMElement, hp, x, y, width, height, speed, characterNumber, chars) {
+export default class DanteAi extends Character {
+    constructor(DOMElement, hp, x, y, width, height, speed, characterNumber, characters) {
         super(DOMElement, hp, x, y, width, height, speed, characterNumber);
-        this.targetPoint = { x: 450, y: 300 };
-        this.chars = chars
+        this.targetPoint = { x: 300, y: 300 };
+        this.characters = characters;
     }
 
     computeActions() {
+        this.computeMovement();
+    }
+
+    computeMovement() {
         if (this.x != this.targetPoint.x || this.y != this.targetPoint.y) {
             if (this.x < this.targetPoint.x) {
                 this.x += this.speed;
@@ -21,15 +25,4 @@ export default class SimpleAi2 extends Character {
             }
         }
     }
-
-    registerMovementActivity(){
-
-    }
-
-    registerHit(characters){
-
-    }
-
-
-
 }

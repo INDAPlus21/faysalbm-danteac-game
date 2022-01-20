@@ -24,7 +24,7 @@ export default class Character {
         else {
             this.hp -= damage;
         }
-        document.getElementById("HP" + this.characterNumber).innerHTML = "Player" + this.characterNumber + ": " + this.hp;
+        document.getElementById("hp" + this.characterNumber).innerHTML = "Player" + this.characterNumber + ": " + this.hp;
     }
 
     updatePosition() {
@@ -76,10 +76,5 @@ export default class Character {
 
     static inRange(value, min, max) {
         return (value > min && value < max);
-    }
-
-    initDimensions() {
-        this.DOMElement.style.width = `${characterWidth}px`;
-        this.DOMElement.style.height = `${characterHeight}px`;
     }
 }

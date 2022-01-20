@@ -1,12 +1,12 @@
 import Player from "./Player.js";
-import SimpleAi from "./SimpleAi.js";
-import SimpleAi2 from "./SimpleAi2.js";
+import DanteAi from "./DanteAi.js";
+import FaysalAi from "./FaysalAi.js";
 
 `use strict`
 
-const speed = 3;
-const characterWidth = 20;
-const characterHeight = 30;
+const SPEED = 3;
+const CHARACTER_WIDTH = 20;
+const CHARACTER_HEIGHT = 30;
 let isPaused = true;
 const gameModes = {
     pvp: "pvp",
@@ -14,33 +14,34 @@ const gameModes = {
     aiVsAi: "ai-vs-ai"
 }
 let gameMode = gameModes.pvp;
-let char1;
-let char2;
-let chars = [];
-const map = document.getElementById("map");
+let character1;
+let character2;
+const characters = [];
+const MAP_WIDTH = 600;
+const MAP_HEIGHT = 450;
+const MAP_RIGHT_EDGE = MAP_WIDTH - CHARACTER_WIDTH;
+const MAP_BOTTOM_EDGE = MAP_HEIGHT - CHARACTER_HEIGHT;
 
 startProgram();
 
-
-//#region Set character dimensions
-document.getElementById("character1").style.width = `${characterWidth}px`;
-document.getElementById("character1").style.height = `${characterHeight}px`;
-document.getElementById("character2").style.width = `${characterWidth}px`;
-document.getElementById("character2").style.height = `${characterHeight}px`;
-//#endregion
-
-//#region Set map dimensions.
-const mapWidth = 600;
-const mapHeight = 450;
-map.style.width = `${mapWidth}px`;
-map.style.height = `${mapHeight}px`;
-const mapRightEdge = mapWidth - characterWidth;
-const mapBottomEdge = mapHeight - characterHeight;
-//#endregion
-
 function startProgram() {
+    setCharacterDimensions();
+    setMapDimensions();
     addMenuEventListeners();
     addPauseKeyPressEventListener();
+}
+
+function setCharacterDimensions() {
+    document.getElementById("character1").style.width = `${CHARACTER_WIDTH}px`;
+    document.getElementById("character1").style.height = `${CHARACTER_HEIGHT}px`;
+    document.getElementById("character2").style.width = `${CHARACTER_WIDTH}px`;
+    document.getElementById("character2").style.height = `${CHARACTER_HEIGHT}px`;
+}
+
+function setMapDimensions() {
+    const map = document.getElementById("map");
+    map.style.width = `${MAP_WIDTH}px`;
+    map.style.height = `${MAP_HEIGHT}px`;
 }
 
 //#region Add event listener functions
@@ -91,40 +92,36 @@ function aiVsAiChoiceBtnHandler() {
 
 function beginGame() {
     if (gameMode === gameModes.playerVsAi || gameMode === gameModes.aiVsAi) {
-        console.log(isValidRadioBtnChoices());
         if (isValidRadioBtnChoices()) {
             if (gameMode === gameModes.playerVsAi) {
                 initiatePlayerVsAiCharacters();
             } else {
                 initiateAiVsAiCharacters();
             }
-            document.getElementById("HP" + char1.characterNumber).innerHTML = "Player" + char1.characterNumber + ": " + char1.hp;
-            document.getElementById("HP" + char2.characterNumber).innerHTML = "Player" + char2.characterNumber + ": " + char2.hp;
+            characters.unshift(character1);
+            characters.unshift(character2);
             hideMainMenu();
-            chars.unshift(char1);
-            chars.unshift(char2);
-            console.log(char1);
-            console.log(char2);
+            document.getElementById("hp" + character1.characterNumber).innerHTML = "Player" + character1.characterNumber + ": " + character1.hp;
+            document.getElementById("hp" + character2.characterNumber).innerHTML = "Player" + character2.characterNumber + ": " + character2.hp;
             gameLoop();
         }
     } else {
         initiatePvpCharacters();
-        document.getElementById("HP" + char1.characterNumber).innerHTML = "Player" + char1.characterNumber + ": " + char1.hp;
-        document.getElementById("HP" + char2.characterNumber).innerHTML = "Player" + char2.characterNumber + ": " + char2.hp;
-        chars.unshift(char1);
-        chars.unshift(char2);
+        characters.unshift(character1);
+        characters.unshift(character2);
         hideMainMenu();
+        document.getElementById("hp" + character1.characterNumber).innerHTML = "Player" + character1.characterNumber + ": " + character1.hp;
+        document.getElementById("hp" + character2.characterNumber).innerHTML = "Player" + character2.characterNumber + ": " + character2.hp;
         gameLoop();
     }
 }
 //#endregion
 
-
 function gameLoop() {
-    char1.computeActions(mapRightEdge, mapBottomEdge);
-    char2.computeActions(mapRightEdge, mapBottomEdge);
-    char1.updatePosition();
-    char2.updatePosition();
+    character1.computeActions(MAP_RIGHT_EDGE, MAP_BOTTOM_EDGE);
+    character2.computeActions(MAP_RIGHT_EDGE, MAP_BOTTOM_EDGE);
+    character1.updatePosition();
+    character2.updatePosition();
     window.requestAnimationFrame(() => {
         gameLoop();
     })
@@ -173,41 +170,44 @@ function isValidRadioBtnChoices() {
 
 function changeRadioBtnsGrouping() {
     if (gameMode === gameModes.playerVsAi) {
-        document.getElementById("radio-btn-char1-ai1").setAttribute("name", "ai-selection");
-        document.getElementById("radio-btn-char1-ai2").setAttribute("name", "ai-selection");
-        document.getElementById("radio-btn-char2-ai1").setAttribute("name", "ai-selection");
-        document.getElementById("radio-btn-char2-ai2").setAttribute("name", "ai-selection");
+        document.getElementById("radio-btn-character1-ai1").setAttribute("name", "ai-selection");
+        document.getElementById("radio-btn-character1-ai2").setAttribute("name", "ai-selection");
+        document.getElementById("radio-btn-character2-ai1").setAttribute("name", "ai-selection");
+        document.getElementById("radio-btn-character2-ai2").setAttribute("name", "ai-selection");
     } else if (gameMode === gameModes.aiVsAi) {
-        document.getElementById("radio-btn-char1-ai1").setAttribute("name", "ai-selection1");
-        document.getElementById("radio-btn-char1-ai2").setAttribute("name", "ai-selection1");
-        document.getElementById("radio-btn-char2-ai1").setAttribute("name", "ai-selection2");
-        document.getElementById("radio-btn-char2-ai2").setAttribute("name", "ai-selection2");
+        document.getElementById("radio-btn-character1-ai1").setAttribute("name", "ai-selection1");
+        document.getElementById("radio-btn-character1-ai2").setAttribute("name", "ai-selection1");
+        document.getElementById("radio-btn-character2-ai1").setAttribute("name", "ai-selection2");
+        document.getElementById("radio-btn-character2-ai2").setAttribute("name", "ai-selection2");
     }
 }
 
 //#region Initiate characters functions,
 function initiatePlayerVsAiCharacters() {
-    if (document.getElementById("radio-btn-char1-ai1").checked) {
-
-        char1 = new SimpleAi(
+    if (document.getElementById("radio-btn-character1-ai1").checked) {
+        //#region character1 - DanteAi constructor
+        character1 = new DanteAi(
             document.getElementById("character1"),
             4,
             600,
             450,
-            characterWidth,
-            characterHeight,
-            speed,
-            1
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
+            1,
+            characters
         );
+        //#endregion
 
-        char2 = new Player(
+        //#region character2 - Player constructor
+        character2 = new Player(
             document.getElementById("character2"),
             4,
             0,
             0,
-            characterWidth,
-            characterHeight,
-            speed,
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
             2,
             "d",
             "a",
@@ -215,28 +215,33 @@ function initiatePlayerVsAiCharacters() {
             "w",
             "g"
         );
-        activePlayer2()
+        activePlayer2();
+        //#endregion
     }
-    else if (document.getElementById("radio-btn-char1-ai2").checked) {
-        char1 = new SimpleAi2(
+    else if (document.getElementById("radio-btn-character1-ai2").checked) {
+        //#region character1 - FaysalAi constructor
+        character1 = new FaysalAi(
             document.getElementById("character1"),
             4,
             600,
             450,
-            characterWidth,
-            characterHeight,
-            speed,
-            1
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
+            1,
+            characters
         );
+        //#endregion
 
-        char2 = new Player(
+        //#region character2 - Player constructor
+        character2 = new Player(
             document.getElementById("character2"),
             4,
             0,
             0,
-            characterWidth,
-            characterHeight,
-            speed,
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
             2,
             "d",
             "a",
@@ -244,19 +249,20 @@ function initiatePlayerVsAiCharacters() {
             "w",
             "g"
         );
-        activePlayer2()
+        activePlayer2();
+        //#endregion
     }
 
-    else if (document.getElementById("radio-btn-char2-ai1").checked) {
-
-        char1 = new Player(
+    else if (document.getElementById("radio-btn-character2-ai1").checked) {
+        //#region character1 - Player constructor
+        character1 = new Player(
             document.getElementById("character1"),
             4,
             600,
             450,
-            characterWidth,
-            characterHeight,
-            speed,
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
             1,
             "ArrowRight",
             "ArrowLeft",
@@ -264,28 +270,33 @@ function initiatePlayerVsAiCharacters() {
             "ArrowUp",
             "."
         );
-        activePlayer1()
+        activePlayer1();
+        //#endregion
 
-        char2 = new SimpleAi(
+        //#region character2 - DanteAi constructor
+        character2 = new DanteAi(
             document.getElementById("character2"),
             4,
             0,
             0,
-            characterWidth,
-            characterHeight,
-            speed,
-            2
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
+            2,
+            characters
         );
+        //#endregion
     }
-    else if (document.getElementById("radio-btn-char2-ai2").checked) {
-        char1 = new Player(
+    else if (document.getElementById("radio-btn-character2-ai2").checked) {
+        //#region character1 - Player constructor
+        character1 = new Player(
             document.getElementById("character1"),
             4,
             600,
             450,
-            characterWidth,
-            characterHeight,
-            speed,
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
             1,
             "ArrowRight",
             "ArrowLeft",
@@ -293,90 +304,99 @@ function initiatePlayerVsAiCharacters() {
             "ArrowUp",
             "."
         );
-        activePlayer1()
+        activePlayer1();
+        //#endregion
 
-        char2 = new SimpleAi2(
+        //#region character2 - FaysalAi constructor
+        character2 = new FaysalAi(
             document.getElementById("character2"),
             4,
             0,
             0,
-            characterWidth,
-            characterHeight,
-            speed,
-            2
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
+            2,
+            characters
         );
-
+        //#endregion
     }
 }
 
 function initiateAiVsAiCharacters() {
-    if (document.getElementById("radio-btn-char1-ai1").checked) {
-
-        char1 = new SimpleAi(
+    if (document.getElementById("radio-btn-character1-ai1").checked) {
+        //#region character1 - DanteAi constructor
+        character1 = new DanteAi(
             document.getElementById("character1"),
             4,
             600,
             450,
-            characterWidth,
-            characterHeight,
-            speed,
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
             1,
-            chars
+            characters
         );
-
+        //#endregion
     }
-    else if (document.getElementById("radio-btn-char1-ai2").checked) {
-
-        char1 = new SimpleAi2(
+    else if (document.getElementById("radio-btn-character1-ai2").checked) {
+        //#region character1 - FaysalAi constructor
+        character1 = new FaysalAi(
             document.getElementById("character1"),
             4,
             600,
             450,
-            characterWidth,
-            characterHeight,
-            speed,
-            1
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
+            1,
+            characters
         );
+        //#endregion
     }
 
-    if (document.getElementById("radio-btn-char2-ai1").checked) {
-
-        char2 = new SimpleAi(
+    if (document.getElementById("radio-btn-character2-ai1").checked) {
+        //#region character2 - DanteAi constructor
+        character2 = new DanteAi(
             document.getElementById("character2"),
             4,
             0,
             0,
-            characterWidth,
-            characterHeight,
-            speed,
-            2
-        );
-    }
-    else if (document.getElementById("radio-btn-char2-ai2").checked) {
-
-        char2 = new SimpleAi2(
-            document.getElementById("character2"),
-            4,
-            0,
-            0,
-            characterWidth,
-            characterHeight,
-            speed,
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
             2,
-            chars
+            characters
         );
+        //#endregion
+    }
+    else if (document.getElementById("radio-btn-character2-ai2").checked) {
+        //#region character2 - FaysalAi
+        character2 = new FaysalAi(
+            document.getElementById("character2"),
+            4,
+            0,
+            0,
+            CHARACTER_WIDTH,
+            CHARACTER_HEIGHT,
+            SPEED,
+            2,
+            characters
+        );
+        //#endregion
     }
 }
 
 function initiatePvpCharacters() {
-    char1 = new Player(
+    //#region character1 - Player constructor
+    character1 = new Player(
         document.getElementById("character1"),
         4,
         600,
         450,
-        characterWidth,
-        characterHeight,
-        speed,
+        CHARACTER_WIDTH,
+        CHARACTER_HEIGHT,
+        SPEED,
         1,
         "ArrowRight",
         "ArrowLeft",
@@ -384,14 +404,17 @@ function initiatePvpCharacters() {
         "ArrowUp",
         "."
     );
-    char2 = new Player(
+    //#endregion
+
+    //#region character2 - Player constructor
+    character2 = new Player(
         document.getElementById("character2"),
         4,
         0,
         0,
-        characterWidth,
-        characterHeight,
-        speed,
+        CHARACTER_WIDTH,
+        CHARACTER_HEIGHT,
+        SPEED,
         2,
         "d",
         "a",
@@ -399,26 +422,22 @@ function initiatePvpCharacters() {
         "w",
         "g"
     );
+    //#endregion
+
     activePlayer1()
     activePlayer2()
 }
 
-function activePlayer1(){
-    char1.registerMovementActivity();
-    char1.registerHit(chars);
+function activePlayer1() {
+    character1.registerMovementActivity();
+    character1.registerHit(characters);
 }
 
-function activePlayer2(){
-    char2.registerMovementActivity();
-    char2.registerHit(chars);
+function activePlayer2() {
+    character2.registerMovementActivity();
+    character2.registerHit(characters);
 }
-
-
 //#endregion
-
-// function createPlayer(playerReference) {
-
-// }
 
 //#region Hide and show functions.
 function hideMainMenu() {
@@ -453,4 +472,3 @@ function showStartBtn() {
     document.getElementById("start-btn").style.display = "initial";
 }
 //#endregion
-
