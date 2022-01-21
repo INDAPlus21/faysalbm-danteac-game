@@ -15,6 +15,7 @@ export default class Player extends Character {
 
     computeActions(mapRightEdge, mapBottomEdge) {
         this.computeMovement(mapRightEdge, mapBottomEdge);
+        return this.hp;
     }
 
     computeMovement(mapRightEdge, mapBottomEdge) {
