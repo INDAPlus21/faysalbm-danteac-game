@@ -1,13 +1,14 @@
 *, *::after, *::before {
     box-sizing: border-box;
 }
-#UI {
-    margin:auto;
-    text-align: center;
+
+.character {
+    position: absolute;
+    z-index: top;
+    float: left;
 }
 
-#mainMenu
-{
+#main-menu {
   padding: 20%;
   text-align: center;
   position: fixed;
@@ -22,8 +23,11 @@
   z-index: 10;
 }
 
-#chooseAi
-{
+#pvp-choice-btn {
+    float:center
+}
+
+#ai-selection-menu {
   width: 5%;
   height: 35%;
   position: fixed;
@@ -36,8 +40,7 @@
   padding: 7%;
 }
 
-#character1AiSelection
-{
+#char1-ai-selection {
     width: 5%;
     height: 30%;
     position: fixed;
@@ -51,8 +54,14 @@
     padding: 5%;
 }
 
-#character2AiSelection
-{
+#character-im1 {
+    position: relative;
+    width: 20px;
+    height: 30px;
+    background-color: darkgreen;
+}
+
+#char2-ai-selection {
     width: 5%;
     height: 30%;
     position: fixed;
@@ -66,16 +75,28 @@
     padding: 5%;
 }
 
-
-/*Menu Buttons*/
-
-#playerVsPlayer {
-    float:center
+#character-im2 {
+    position: relative;
+    width: 20px;
+    height: 30px;
+    background-color: steelblue;
 }
 
-#startButton
-{
+#start-btn {
     display: none;
+}
+
+#game-ui {
+    margin:auto;
+    text-align: center;
+}
+
+#hp1 {
+    float: right;
+}
+
+#hp2 {
+    float: left;
 }
 
 #map {
@@ -87,38 +108,10 @@
     position: absolute;
 }
 
-.character {
-    position: absolute;
-    z-index: top;
-    float: left;
-}
-
-#character1 
-{
+#character1 {
     background-color: darkgreen;
 }
 
-#character2 
-{
+#character2 {
     background-color: steelblue;
 }
-
-#characterIm1
-{
-    position: relative;
-    width: 20px;
-    height: 30px;
-    background-color: darkgreen;
-}
-
-#characterIm2 
-{
-    position: relative;
-    width: 20px;
-    height: 30px;
-    background-color: steelblue;
-}
-
-
-
-
