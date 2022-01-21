@@ -55,7 +55,7 @@ function addMenuEventListeners() {
 
 function addPauseKeyPressEventListener() {
     document.addEventListener("keydown", (e) => {
-        console.log(e);
+        // console.log(e);
         if (e.key === "Escape") {
             if (isPaused) {
                 hideMenuAndResume();
