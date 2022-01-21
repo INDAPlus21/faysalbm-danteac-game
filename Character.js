@@ -64,7 +64,6 @@ export default class Character {
             xMax = this.x;
             xMin = this.x - FORWARD_RANGE;
         }
-
         characters.forEach(character => {
             if (character != this
                 && Character.inRange(character.x, xMin, xMax)
