@@ -31,6 +31,7 @@ export default class DanteAi extends Character {
     computeActions(mapRightEdge, mapBottomEdge) {
         this.computeOppDirection();
         this.computeMovement(mapRightEdge, mapBottomEdge);
+        return this.hp;
     }
 
     computeMovement(mapRightEdge, mapBottomEdge) {

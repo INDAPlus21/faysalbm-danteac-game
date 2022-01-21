@@ -55,7 +55,6 @@ function addMenuEventListeners() {
 
 function addPauseKeyPressEventListener() {
     document.addEventListener("keydown", (e) => {
-        // console.log(e);
         if (e.key === "Escape") {
             if (isPaused) {
                 hideMenuAndResume();
@@ -118,17 +117,24 @@ function beginGame() {
         document.getElementById("hp" + character2.characterNumber).innerHTML = "Player" + character2.characterNumber + ": " + character2.hp;
         gameLoop();
     }
+    console.log(characters);
 }
 //#endregion
 
 function gameLoop() {
-    character1.computeActions(MAP_RIGHT_EDGE, MAP_BOTTOM_EDGE);
-    character2.computeActions(MAP_RIGHT_EDGE, MAP_BOTTOM_EDGE);
+    const hp1 = character1.computeActions(MAP_RIGHT_EDGE, MAP_BOTTOM_EDGE);
+    const hp2 = character2.computeActions(MAP_RIGHT_EDGE, MAP_BOTTOM_EDGE);
     character1.updatePosition();
     character2.updatePosition();
-    window.requestAnimationFrame(() => {
-        gameLoop();
-    })
+    if (hp1 != 0 && hp2 != 0) {
+        window.requestAnimationFrame(() => {
+            gameLoop();
+        })
+    } else if (hp2 === 0) {
+        document.getElementById("victory-msg").innerHTML = "Player1 won";
+    } else {
+        document.getElementById("victory-msg").innerHTML = "Player2 won";
+    }
 }
 
 function hideMenuAndResume() {

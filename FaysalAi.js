@@ -3,7 +3,7 @@ import Character from "./Character.js";
 export default class FaysalAi extends Character {
     constructor(DOMElement, hp, x, y, width, height, speed, characterNumber, characters) {
         super(DOMElement, hp, x, y, width, height, speed, characterNumber);
-        this.targetPoint = { x: 225 - width/2, y: 300 - height/2 };
+        this.targetPoint = { x: 225 - width / 2, y: 300 - height / 2 };
         this.characters = characters
         this.targetCharacter = null;
         this.distanceToTarget;
@@ -14,7 +14,7 @@ export default class FaysalAi extends Character {
 
     activate(characters) {
         characters.forEach(character => {
-            console.log(character);
+            // console.log(character);
             if (character != this) {
                 this.opponent = character;
             }
@@ -26,57 +26,63 @@ export default class FaysalAi extends Character {
         this.processInformation();
         this.computeAttack();
         this.computeMovement();
+        return this.hp;
     }
 
-    processInformation(){
+    processInformation() {
         this.lookForTarget();
         this.setTargetPoint();
 
     }
 
-    lookForTarget(){
-        for(let character of this.characters){
-            let distanceToCharacter = Math.sqrt((character.x - this.x)**2 + (character.y - this.y)**2)
+    lookForTarget() {
+        for (let character of this.characters) {
+            let distanceToCharacter = Math.sqrt((character.x - this.x) ** 2 + (character.y - this.y) ** 2)
             // console.log("looking");
-            if(character !== this){
-                if(distanceToCharacter < this.vision){
-                    console.log(distanceToCharacter);
-                    if(this.targetCharacter === null || (distanceToCharacter < this.distanceToTarget && this.targetCharacter !== character)){
+            if (character !== this) {
+                if (distanceToCharacter < this.vision) {
+                    // console.log(distanceToCharacter);
+                    if (this.targetCharacter === null || (distanceToCharacter < this.distanceToTarget && this.targetCharacter !== character)) {
                         this.targetCharacter = character;
-                        console.log(this.targetCharacter + "!!!!! !!!");
-                    } 
-                    else if(character === this.targetCharacter && distanceToCharacter < 100 && this.meleeAttackCooldown){
+                        // console.log(this.targetCharacter + "!!!!! !!!");
+                    }
+                    else if (character === this.targetCharacter && distanceToCharacter < 100 && this.meleeAttackCooldown) {
                         this.chaseTarget = false;
                         // this.targetCharacter = false;
                     }
                 }
-                else if(character === this.targetCharacter){
+                else if (character === this.targetCharacter) {
                     this.targetCharacter = null;
                 }
             }
         }
     }
 
-    setTargetPoint(){
-        if(this.targetCharacter !== null){
-            this.targetPoint = { x: this.targetCharacter.x, y: this.targetCharacter.y}
-            console.log("new TargetLocation" + this.targetCharacter.x + " " + this.targetCharacter.y);
+    setTargetPoint() {
+        if (this.targetCharacter !== null) {
+            this.targetPoint = { x: this.targetCharacter.x, y: this.targetCharacter.y }
+            // console.log("new TargetLocation" + this.targetCharacter.x + " " + this.targetCharacter.y);
         }
-        else{
-            this.targetPoint = { x: 225 - this.width/2, y: 300 - this.height/2 };
+        else {
+            this.targetPoint = { x: 225 - this.width / 2, y: 300 - this.height / 2 };
         }
     }
 
-    computeAttack(){
-        if(this.targetCharacter !== null && this.checkMeleeRange()){
+    computeAttack() {
+        if (this.targetCharacter !== null && this.checkMeleeRange()) {
             this.makeMeleeAttack();
         }
     }
 
-    makeMeleeAttack(){
+    makeMeleeAttack() {
         this.facing = this.targetRelativeDirection();
-        if(!this.meleeAttackCooldown){
+        if (!this.meleeAttackCooldown) {
             this.hit(this.characters);
+            this.meleeAttackCooldown = true;
+            setTimeout(() => {
+                this.meleeAttackCooldown = false;
+                this.chaseTarget = true;
+            }, 2000);
             // this.meleeAttackCooldown = true;
             // setTimeout(function(){
             //     console.log("hello" + this.chaseTarget);
@@ -88,7 +94,7 @@ export default class FaysalAi extends Character {
 
     }
 
-    checkMeleeRange(){ // ok kolla jag vet att jag upprepar kod men asså jag orkar inte just nu jag vill bara få pass
+    checkMeleeRange() { // ok kolla jag vet att jag upprepar kod men asså jag orkar inte just nu jag vill bara få pass
         const FORWARD_RANGE = 60;
         const SIDE_RANGE = 40;
         let xMin;
@@ -102,44 +108,44 @@ export default class FaysalAi extends Character {
         xMin = this.x - SIDE_RANGE;
 
         if (Character.inRange(this.targetCharacter.x, xMin, xMax)
-            && Character.inRange(this.targetCharacter.y, yMin, yMax)) { 
-                return true
-            }
-        
+            && Character.inRange(this.targetCharacter.y, yMin, yMax)) {
+            return true
+        }
+
         yMax = this.y + SIDE_RANGE;
         yMin = this.y - SIDE_RANGE;
-        xMax = this.x + FORWARD_RANGE;            
+        xMax = this.x + FORWARD_RANGE;
         xMin = this.x;
 
         if (Character.inRange(this.targetCharacter.x, xMin, xMax)
-            && Character.inRange(this.targetCharacter.y, yMin, yMax)) { 
-                return true
-            }
+            && Character.inRange(this.targetCharacter.y, yMin, yMax)) {
+            return true
+        }
 
         yMax = this.y + FORWARD_RANGE;
         yMin = this.y;
         xMax = this.x + SIDE_RANGE;
         xMin = this.x - SIDE_RANGE;
 
-        if ( Character.inRange(this.targetCharacter.x, xMin, xMax)
-            && Character.inRange(this.targetCharacter.y, yMin, yMax)) { 
-                return true
-            }
+        if (Character.inRange(this.targetCharacter.x, xMin, xMax)
+            && Character.inRange(this.targetCharacter.y, yMin, yMax)) {
+            return true
+        }
 
         yMax = this.y + SIDE_RANGE;
         yMin = this.y - SIDE_RANGE;
         xMax = this.x;
         xMin = this.x - FORWARD_RANGE;
-        
+
         if (Character.inRange(this.targetCharacter.x, xMin, xMax)
-            && Character.inRange(this.targetCharacter.y, yMin, yMax)) { 
-                return true
-            }
+            && Character.inRange(this.targetCharacter.y, yMin, yMax)) {
+            return true
+        }
         return false;
     }
 
 
-    targetRelativeDirection(){ // Jag kopierar kod igen snälla slå mig inte jag har ont om tid, energi och livskraft
+    targetRelativeDirection() { // Jag kopierar kod igen snälla slå mig inte jag har ont om tid, energi och livskraft
         const FORWARD_RANGE = 60;
         const SIDE_RANGE = 40;
         let xMin;
@@ -153,49 +159,49 @@ export default class FaysalAi extends Character {
         xMin = this.x - SIDE_RANGE;
 
         if (Character.inRange(this.targetCharacter.x, xMin, xMax)
-            && Character.inRange(this.targetCharacter.y, yMin, yMax)) { 
-                return this.directions.up
-            }
-        
+            && Character.inRange(this.targetCharacter.y, yMin, yMax)) {
+            return this.directions.up
+        }
+
         yMax = this.y + SIDE_RANGE;
         yMin = this.y - SIDE_RANGE;
-        xMax = this.x + FORWARD_RANGE;            
+        xMax = this.x + FORWARD_RANGE;
         xMin = this.x;
 
         if (Character.inRange(this.targetCharacter.x, xMin, xMax)
-            && Character.inRange(this.targetCharacter.y, yMin, yMax)) { 
-                return this.directions.right;
-            }
+            && Character.inRange(this.targetCharacter.y, yMin, yMax)) {
+            return this.directions.right;
+        }
 
         yMax = this.y + FORWARD_RANGE;
         yMin = this.y;
         xMax = this.x + SIDE_RANGE;
         xMin = this.x - SIDE_RANGE;
 
-        if ( Character.inRange(this.targetCharacter.x, xMin, xMax)
-            && Character.inRange(this.targetCharacter.y, yMin, yMax)) { 
-                return this.directions.down
-            }
+        if (Character.inRange(this.targetCharacter.x, xMin, xMax)
+            && Character.inRange(this.targetCharacter.y, yMin, yMax)) {
+            return this.directions.down
+        }
 
         yMax = this.y + SIDE_RANGE;
         yMin = this.y - SIDE_RANGE;
         xMax = this.x;
         xMin = this.x - FORWARD_RANGE;
-        
+
         if (Character.inRange(this.targetCharacter.x, xMin, xMax)
-            && Character.inRange(this.targetCharacter.y, yMin, yMax)) { 
-                return this.directions.left
-            }
+            && Character.inRange(this.targetCharacter.y, yMin, yMax)) {
+            return this.directions.left
+        }
         return this.directions.up; // oj vilken ful kod, en return som aldrig ska kunna nås, ajajaj, vad du än gör, VISA INTE FÖR RIC
     }
 
-    computeMovement(){
-        if(this.hp != 0){
-            console.log(this.chaseTarget);
-            if(this.chaseTarget === true) {
+    computeMovement() {
+        if (this.hp != 0) {
+            // console.log(this.chaseTarget);
+            if (this.chaseTarget === true) {
                 this.computeMovementToTarget();
             }
-            else{
+            else {
                 this.executeMovementPattern();
             }
         }
@@ -217,7 +223,7 @@ export default class FaysalAi extends Character {
         }
     }
 
-    executeMovementPattern(){
+    executeMovementPattern() {
         // this.x = 100;
         // this.y = 300;
     }
